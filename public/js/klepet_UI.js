@@ -33,7 +33,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
 }
 
 var socket = io.connect();
-var trenutniVzdevek = "", trenutniKanal = "";
+var trenutniVzdevek = "", trenutniKanal = "", trenutniZasebno="";
 
 var vulgarneBesede = [];
 $.get('/swearWords.txt', function(podatki) {
@@ -97,8 +97,22 @@ $(document).ready(function() {
   socket.on('uporabniki', function(uporabniki) {
     $('#seznam-uporabnikov').empty();
     for (var i=0; i < uporabniki.length; i++) {
-      $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
+      if(uporabniki[i]!=trenutniZasebno)
+        $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
+      else
+      {
+        var el = divElementEnostavniTekst(uporabniki[i]);
+        el.css("background-color","grey")
+        $('#seznam-uporabnikov').append(el);
+      }
     }
+    
+    $('#seznam-uporabnikov div').click(function() {
+      trenutniZasebno =  $(this).text();
+      $('#poslji-sporocilo').val('/zasebno ' + $(this).text());
+      $('#poslji-sporocilo').focus();
+    });
+    
   });
 
   setInterval(function() {
@@ -131,3 +145,5 @@ function dodajSmeske(vhodnoBesedilo) {
   }
   return vhodnoBesedilo;
 }
+
+
