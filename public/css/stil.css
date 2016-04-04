@@ -44,6 +44,10 @@ a {
   cursor: pointer;
 }
 
+#seznam-uporabnikov div {
+  cursor: pointer;
+}
+
 #seznam-kanalov div:hover {
   background-color: #ddd;
 }
