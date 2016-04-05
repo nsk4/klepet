@@ -135,7 +135,19 @@ $(document).ready(function() {
         $('#seznam-kanalov').append(divElementEnostavniTekst(kanal));
       }
     }
-
+    
+    socket.on('dregljaj', function (vsebina) {
+      if (vsebina.dregljaj) {
+        //alert("dregljaj");
+        $("#vsebina").trigger('startRumble');
+        setTimeout(function () {
+          $("#vsebina").trigger('stopRumble');
+        }, 1500);
+      } 
+    });
+    
+    $("#vsebina").jrumble();
+    
     $('#seznam-kanalov div').click(function() {
       klepetApp.procesirajUkaz('/pridruzitev ' + $(this).text());
       $('#poslji-sporocilo').focus();
