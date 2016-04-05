@@ -153,14 +153,14 @@ $(document).ready(function() {
       else
       {
         var el = divElementEnostavniTekst(uporabniki[i]);
-        el.css("background-color","grey")
+        el.css("background-color","grey");
         $('#seznam-uporabnikov').append(el);
       }
     }
     
     $('#seznam-uporabnikov div').click(function() {
       trenutniZasebno =  $(this).text();
-      $('#poslji-sporocilo').val('/zasebno ' + $(this).text());
+      $('#poslji-sporocilo').val('/zasebno "' + $(this).text()+'"');
       $('#poslji-sporocilo').focus();
     });
     
