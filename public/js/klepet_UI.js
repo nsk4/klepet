@@ -1,21 +1,12 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
-<<<<<<< HEAD
   var jeSlika = sporocilo.indexOf("alt='slika'") > -1;
-  if (jeSmesko || jeSlika) {
+  var jeVideo = sporocilo.indexOf('https://www.youtube.com')>-1;
+  if (jeSmesko || jeSlika || jeVideo) {
     //sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />').replace('jpg\' /&gt;', 'jpg\' />').replace('gif\' /&gt;', 'gif\' />');
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
     sporocilo = sporocilo.replace(/(\&lt\;img)/g, '<img').replace(/png\' \/\&gt\;/g, 'png\' />').replace(/jpg\' \/\&gt\;/g, 'jpg\' />').replace(/gif\' \/\&gt\;/g, 'gif\' />');
-    
-    //alert(sporocilo);
-    //
-=======
-  var jeVideo = sporocilo.indexOf('https://www.youtube.com')>-1
-  if (jeSmesko || jeVideo) {
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
     sporocilo = sporocilo.replace(/\&lt\;iframe/g, '<iframe').replace(/allowfullscreen\&gt\;\&lt\;\/iframe\&gt;/g, 'allowfullscreen></iframe>');
-    
->>>>>>> youtube
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
