@@ -3,6 +3,11 @@ function divElementEnostavniTekst(sporocilo) {
   var jeSlika = sporocilo.indexOf("alt='slika'") > -1;
   if (jeSmesko || jeSlika) {
     //sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />').replace('jpg\' /&gt;', 'jpg\' />').replace('gif\' /&gt;', 'gif\' />');
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
+    sporocilo = sporocilo.replace(/(\&lt\;img)/g, '<img').replace(/png\' \/\&gt\;/g, 'png\' />').replace(/jpg\' \/\&gt\;/g, 'jpg\' />').replace(/gif\' \/\&gt\;/g, 'gif\' />');
+    
+    //alert(sporocilo);
+    //
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
@@ -39,8 +44,11 @@ function procesirajVnosUporabnika(klepetApp, socket) {
 function procesirajPotencialneSlike(sporocilo)
 {
   
-  sporocilo = sporocilo.replace(new RegExp('\\b(http\:\/\/|https\:\/\/).+(.jpg|.png|.gif)\\b', 'gi'), function(url) {
-      var zamenjava = "<img src='"+url+"' alt='slika' class='slika' />";
+  sporocilo = sporocilo.replace(new RegExp(
+    '\\b(http\\:\\/\\/|https\\:\\/\\/)[^\ ]+(\\.jpg|\\.png|\\.gif)\\b',
+    'gi'), function(url) {
+      var zamenjava = "<img alt='slika' class='slika' src='"+url+"' />";
+      //alert(zamenjava);
       return zamenjava;
   });
   
