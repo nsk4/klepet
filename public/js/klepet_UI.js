@@ -2,7 +2,9 @@ function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   var jeVideo = sporocilo.indexOf('https://www.youtube.com')>-1
   if (jeSmesko || jeVideo) {
-    //sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
+    sporocilo = sporocilo.replace(/\&lt\;iframe/g, '<iframe').replace(/allowfullscreen\&gt\;\&lt\;\/iframe\&gt;/g, 'allowfullscreen></iframe>');
+    
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
@@ -57,11 +59,11 @@ function filtirirajVulgarneBesede(vhod) {
 function procesirajPotencialniVideo(sporocilo)
 {
   
-  sporocilo = sporocilo.replace(new RegExp('\\b(https://www.youtube.com/watch\\?v=(.+))\\b', 'gi'), function(url) {
+  sporocilo = sporocilo.replace(new RegExp('\\b(https\\:\\/\\/www\\.youtube\\.com\\/watch\\?v\\=[^\ ]+)\\b', 'gi'), function(url) {
       
       var videoCode=url.substr(url.indexOf("?v=")+3);
-      alert(videoCode);
-      var zamenjava = "<iframe src='https://www.youtube.com/embed/"+videoCode+"' allowfullscreen></iframe>";
+      //alert(videoCode);
+      var zamenjava = "<iframe class='video' src='https://www.youtube.com/embed/"+videoCode+"' allowfullscreen></iframe>";
       return zamenjava;
   });
   
