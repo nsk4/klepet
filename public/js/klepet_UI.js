@@ -1,5 +1,6 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
+<<<<<<< HEAD
   var jeSlika = sporocilo.indexOf("alt='slika'") > -1;
   if (jeSmesko || jeSlika) {
     //sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />').replace('jpg\' /&gt;', 'jpg\' />').replace('gif\' /&gt;', 'gif\' />');
@@ -8,6 +9,13 @@ function divElementEnostavniTekst(sporocilo) {
     
     //alert(sporocilo);
     //
+=======
+  var jeVideo = sporocilo.indexOf('https://www.youtube.com')>-1
+  if (jeSmesko || jeVideo) {
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
+    sporocilo = sporocilo.replace(/\&lt\;iframe/g, '<iframe').replace(/allowfullscreen\&gt\;\&lt\;\/iframe\&gt;/g, 'allowfullscreen></iframe>');
+    
+>>>>>>> youtube
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
@@ -22,6 +30,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = procesirajPotencialneSlike(sporocilo);
   sporocilo = dodajSmeske(sporocilo);
+  sporocilo = procesirajPotencialniVideo(sporocilo);
   var sistemskoSporocilo;
 
   if (sporocilo.charAt(0) == '/') {
@@ -75,6 +84,21 @@ function filtirirajVulgarneBesede(vhod) {
   }
   return vhod;
 }
+
+function procesirajPotencialniVideo(sporocilo)
+{
+  
+  sporocilo = sporocilo.replace(new RegExp('\\b(https\\:\\/\\/www\\.youtube\\.com\\/watch\\?v\\=[^\ ]+)\\b', 'gi'), function(url) {
+      
+      var videoCode=url.substr(url.indexOf("?v=")+3);
+      //alert(videoCode);
+      var zamenjava = "<iframe class='video' src='https://www.youtube.com/embed/"+videoCode+"' allowfullscreen></iframe>";
+      return zamenjava;
+  });
+  
+  return sporocilo;
+}
+
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
