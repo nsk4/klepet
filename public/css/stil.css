@@ -39,6 +39,13 @@ a {
   width: 15%;
 }
 
+.slika
+{
+  height: 200px;
+  width: 200px;
+  padding-left: 20px;
+}
+
 #seznam-kanalov div {
   border-bottom: 1px solid #eee;
   cursor: pointer;
